@@ -1,4 +1,4 @@
-# jki.tcl \----
+# jki.tcl
 
 # This script is currently in 'DELTA' stage, meaning it is possible it could halt, fault, or break your bot. 
 
@@ -9,7 +9,7 @@ Currently requires no extra packages, but will require sqlite3 when published fo
 
 Parts of this script are inspired by [speechles 'fourtwenty' script](https://github.com/speechles/eggdrop/blob/master/tcl/fourtwenty.tcl) on GitHub :)
 
-Other parts of this script are brainstormed on [IRC-Nerds](ircs://irc.irc-nerds.net:6697/#nerds) with wez, nitecore, Monopoly, and prototrip
+Other parts of this script are brainstormed and tested on [IRC-Nerds](https://webchat.irc-nerds.net/) with wez, nitecore, Monopoly, and prototrip
 
 ## Install
 to install, clone it to your scripts/ folder, then find jki-settings.tcl and edit to your liking.
