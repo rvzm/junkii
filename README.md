@@ -19,11 +19,27 @@ These commands are used in a channel that the bot is on.
 
 The command character is defined by settings->gen->pubtrig
 
-| Command      | Function
-|--------------|----------
-pack           | tells the bot to prepare the channel for a "chan-wide toke-out"
-junky          | use and O.D. on substances
-dealer         | buy stock for your junkies to use
+ Command      | Function
+--------------|----------
+pack          | tells the bot to prepare the channel for a "chan-wide toke-out"
+junky         | use and O.D. on substances
+weed          | smoke or pass various types of devices
+pass          | pass a randomly selected device around the channel
+bong          | load and pass a bong around the channel
+pipe          | load and pass a pipe around the channel
+joint         | roll and pass a joint around the channel
+dealer        | buy stock for your junkies to use
+register      | register with the bot to become a dealer
+
+## Drug settings
+This script allows you to select various was to control what content goes where. There are 3 secondary channel flags and 1 primary.
+
+ Channel Flag  | Function
+---------------|----------
+ jnki          | Primary flag, most functions require this
+ weed          | Weed-related interactions require this
+ sch2          | Mild-hard substances unlocked with this
+ sch1          | full-hard substances unlocked with this
 
 ## Contact
 I can be contacted at irc.irc-nerds.net in #fuknz, #bots, and #nerds
