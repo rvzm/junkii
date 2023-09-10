@@ -20,3 +20,6 @@ The command character is defined by settings->gen->pubtrig
 pack           | tells the bot to prepare the channel for a "chan-wide toke-out"
 junky          | use and O.D. on substances
 dealer         | buy stock for your junkies to use
+
+## Contact
+I can be contacted at irc.irc-nerds.net in #fuknz, #bots, and #nerds
