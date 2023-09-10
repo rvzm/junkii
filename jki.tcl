@@ -1,4 +1,4 @@
-# JunKii - Alcohol and Drug Abuse TBRPG
+# JunKii - Alcohol and Drug Abuse TRPG
 # version: 0.01delta
 # by rvzm
 putlog "Loading JunKii..."
@@ -18,6 +18,7 @@ namespace eval jki {
 		bind pub - ${jki::settings::gen::pubtrig}pass jki::weed::pass
 		bind pub - ${jki::settings::gen::pubtrig}bong jki::weed::bong
 		bind pub - ${jki::settings::gen::pubtrig}joint jki::weed::joint
+		bind pub - ${jki::settings::gen::pubtrig}version jki::base::version
 		bind pub f ${jki::settings::gen::pubtrig}dealer jki::trigger::dealer
 	}
 	namespace eval trigger {
@@ -183,6 +184,13 @@ namespace eval jki {
 			utimer 5 "putserv \"PRIVMSG $wchan :\00315::\00314/\00315/\003092\00315/\00315:\"";
 			utimer 6 "putserv \"PRIVMSG $wchan :\00315::\00315/\003031\00315/\00315:\"";
 			utimer 8 "putserv \"PRIVMSG $wchan :\00315::\00314\002_\00315/\00302SYNCRONIZED! \00304Fire Away!\002\00307!\00308\002!\"";
+			return
+		}
+	}
+	namespace eval base {
+		proc version {nick uhost hand chan text} {
+			putserv "PRIVMSG $chan :JunKii Alcohol and Drug Abuse TRPG"
+			putserv "PRIVMSG $chan :JunKii -> version-[jki::util::getVersion] [jki::util::getBuild] r:[jki::util::getRelease]"
 			return
 		}
 	}
