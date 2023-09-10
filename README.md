@@ -9,7 +9,7 @@ Parts of this script are inspired by [speechles 'fourtwenty' script](https://git
 Other parts of this script are brainstormed on [IRC-Nerds](ircs://irc.irc-nerds.net:6697/#nerds) with wez, nitecore, Monopoly, and prototrip
 
 ## Install
-to install bvzm.tcl, clone it to your scripts/ folder, then find jki-settings.tcl and edit to your liking.
+to install, clone it to your scripts/ folder, then find jki-settings.tcl and edit to your liking.
 
 ## Public channel commands
 These commands are used in a channel that the bot is on.
