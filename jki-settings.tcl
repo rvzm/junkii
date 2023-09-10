@@ -6,7 +6,7 @@ namespace eval jki {
 		variable debug "2"
 		namespace eval gen {
 			variable pubtrig "@"
-			variable controller "~z"
+			variable controller "~j"
 			variable homechan "#bots"
 		}
 		namespace eval hunt {
