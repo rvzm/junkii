@@ -1,32 +1,27 @@
 namespace eval jki {
 	namespace eval settings {
 		variable version "0.1d"
-		variable build "090902"
+		variable build "091008"
 		variable release "dev"
-		variable debug "2"
+		variable debug "3"
 		namespace eval gen {
 			variable pubtrig "@"
-			variable controller "~j"
 			variable homechan "#bots"
 		}
-		namespace eval hunt {
-			variable trigger "8"
-			variable time "5"
-			variable horde "yes"
-			variable maxhorde "3"
-			variable roast "no"
-			variable startonjoin "yes"
-		}
 		namespace eval shop {
-			variable clips "2"
-			variable lvlup "5"
-			variable accuracyupgrade "2"
-			variable clipupgrade "10"
-			variable hordetokens "35"
+			variable nic "13"
+			variable alc "15"
+			variable heroin "20"
+			variable coke "35"
+		}
+		namespace eval timers {
+			variable packdefault "15"
 		}
 		namespace eval flags {
-			setudef flag jkic
 			setudef flag jnki
+			setudef flag weed
+			setudef flag sch2
+			setudef flag sch1
 		}
 	}
 }
