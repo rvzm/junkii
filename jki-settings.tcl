@@ -25,4 +25,4 @@ namespace eval jki {
 		}
 	}
 }
-putlog "JunKii ADATBRPG - settings loaded";
+putlog "JunKii ADATRPG - settings loaded";
