@@ -50,7 +50,7 @@ namespace eval jki {
 				return
 			}
 			if {$v1 == "scotch"} {
-				if {$v2 != ""} { set jkip $v2; jki:: } else { set jkip $nick; }
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
 				jki::util::act $chan "pours $jkip a single-malt scotch over rocks, then slides it down the bar to them"
 				putserv "PRIVMSG $chan :Enjoy your scotch, $jkip!"
 				return
