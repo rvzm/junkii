@@ -38,8 +38,9 @@ This script allows you to select various was to control what content goes where.
 ---------------|----------
  jnki          | Primary flag, most functions require this
  weed          | Weed-related interactions require this
- sch2          | Mild-hard substances unlocked with this
- sch1          | full-hard substances unlocked with this
+ sch3          | Soft substances unlocked with this
+ sch2          | Mild substances unlocked with this
+ sch1          | Hard substances unlocked with this
 
 ## Contact
 I can be contacted at irc.irc-nerds.net in #fuknz, #bots, and #nerds

@@ -6,7 +6,8 @@ namespace eval jki {
 		variable debug "3"
 		namespace eval gen {
 			variable pubtrig "@"
-			variable homechan "#bots"
+			variable homechan "#nerds"
+			variable syncpack "yes"
 		}
 		namespace eval shop {
 			variable nic "13"
@@ -20,6 +21,7 @@ namespace eval jki {
 		namespace eval flags {
 			setudef flag jnki
 			setudef flag weed
+			setudef flag sch3
 			setudef flag sch2
 			setudef flag sch1
 		}
