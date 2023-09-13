@@ -238,15 +238,15 @@ namespace eval jki {
 			proc dbmake {user} {
 				jki::util::sql::initdb;
 				set jdbc "[jdb eval {SELECT * FROM users WHERE user=$user}]"
-				if {${zboe::settings::debug} >= "2"} { zboe::util::zboedbg "(level2) dbmake: $user | $jdbc"; }
+				if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "(dbmake: $user | $jdbc"; }
 				set jdbc [lindex [split $jdbc] 0]
                 if {$jdbc == $user} {
-                    putcmdlog "***zboe|debug-sql|Error! Cannot create users row, it already exists."
+                    if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "sql|Error! Cannot create users row, it already exists." }
                     return 
                 } else {
-                    putcmdlog "***zboe|debug-sql| Creating user $user row"
+                    if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "sql| Creating user $user row" }
                     jdb eval {INSERT INTO users VALUES($user, 0, 1, 0, 55, "no", 6, 3, 6, 3, 0)} -parameters [list user $user]
-					putcmdlog "***zboe|debug-sql| User row $user Created"
+					if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "sql| User row $user Created" }
                 }
             }
 
