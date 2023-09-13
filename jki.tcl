@@ -20,6 +20,9 @@ namespace eval jki {
 		bind pub - ${jki::settings::gen::pubtrig}joint jki::weed::joint
 		bind pub - ${jki::settings::gen::pubtrig}version jki::base::version
 		bind pub f ${jki::settings::gen::pubtrig}dealer jki::trigger::dealer
+		# time binds
+		bind time - "20 04*" jki::weed::synctime
+		bind time - "20 16*" jki::weed::synctime
 	}
 	namespace eval trigger {
 		proc primary {nick uhost hand chan text} {
@@ -205,6 +208,10 @@ namespace eval jki {
 			utimer 6 "putserv \"PRIVMSG $wchan :\00315::\00315/\003031\00315/\00315:\"";
 			utimer 8 "putserv \"PRIVMSG $wchan :\00315::\00314\002_\00315/\00302SYNCRONIZED! \00304Fire Away!\002\00307!\00308\002!\"";
 			return
+		}
+		proc synctime {} {
+			if {${jki::settings::} == ""} { return }
+				putserv "PRIVMSG [zboe::util::homechan] :\00315::\00304/\00303////\00315/\00315:\\00303/\00302/// \0039ITS 4:20! Hit that shit, pass that shit \00302/\00314//\00311\00315/\00315:\\00315/\00303\00315/\00315:" 
 		}
 	}
 	namespace eval base {
