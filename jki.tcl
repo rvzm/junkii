@@ -42,7 +42,8 @@ namespace eval jki {
 				putserv "PRIVMSG $chan :JunKii 'junky' commands via '${jki::settings::gen::pubtrig}junky stock' or use '${jki::settings::gen::pubtrig}weed help' for weed commands"
 			}
 			if {$v1 == "stock"} {
-				putserv "PRIVMSG $chan :JunKii - Current available stock: alcohol, scotch, whiskey, heroin, coke"
+				putserv "PRIVMSG $chan :JunKii - Current available stock: alcohol, scotch, whiskey, heroin, coke, shrooms"
+				putserv "PRIVMSG $chan :JunKii - Available Kratom stocks: kpops (pills), kpow (powder), kshot (liquid)"
 				return
 			}
 			if {$v1 == "alcohol"} {
@@ -71,7 +72,26 @@ namespace eval jki {
 				putserv "PRIVMSG $chan :hey junkiis, we just got some pure columbian cocaine from $nick! who wants to hoover some schneef?!"
 				return
 			}
-			
+			if {$v1 == "shrooms"} {
+				if {![channel get $chan sch2]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have junkii permission for that level of drugs"; return }
+				putserv "PRIVMSG $chan :hey junkiis, we just got some fresh grown Golden Teacher shrooms from $nick! who wants to trip on some sonic chronic?!?!"
+				return
+			}
+			if {$v1 == "kpops"} {
+				if {![channel get $chan sch3]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have junkii permission for that level of drugs"; return }
+				putserv "PRIVMSG $chan :hey junkiis, we just got some Meang Da pills from $nick! who wants to take some kratom?"
+				return
+			}
+			if {$v1 == "kpow"} {
+				if {![channel get $chan sch3]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have junkii permission for that level of drugs"; return }
+				putserv "PRIVMSG $chan :hey junkiis, we just got some fresh Green Dragon powder from $nick! who wants to take some kratom?"
+				return
+			}
+			if {$v1 == "kshot"} {
+				if {![channel get $chan sch3]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have junkii permission for that level of drugs"; return }
+				putserv "PRIVMSG $chan :hey junkiis, we just got some wonderful MIT45 Gold shots from $nick! who wants to take some kratom?"
+				return
+			}
 			return
 		}
 		proc dealer {nick uhand hand chan text} {
