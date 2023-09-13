@@ -209,6 +209,7 @@ namespace eval jki {
 	}
 	namespace eval base {
 		proc version {nick uhost hand chan text} {
+			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
 			putserv "PRIVMSG $chan :JunKii Alcohol and Drug Abuse TRPG"
 			putserv "PRIVMSG $chan :JunKii -> version-[jki::util::getVersion] [jki::util::getBuild] r:[jki::util::getRelease]"
 			return
