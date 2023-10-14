@@ -19,10 +19,12 @@ namespace eval jki {
 		bind pub - ${jki::settings::gen::pubtrig}bong jki::weed::bong
 		bind pub - ${jki::settings::gen::pubtrig}joint jki::weed::joint
 		bind pub - ${jki::settings::gen::pubtrig}version jki::base::version
-		bind pub f ${jki::settings::gen::pubtrig}dealer jki::trigger::dealer
+		bind pub - ${jki::settings::gen::pubtrig}dealer jki::trigger::dealer
 		# time binds
-		bind time - "20 04*" jki::weed::synctime
-		bind time - "20 16*" jki::weed::synctime
+		bind time - "20 04*" jki::weed::synctime 
+		bind time - "20 16*" jki::weed::synctime 
+		# dcc reset
+		bind dcc - junkii jki::dcc::command
 	}
 	namespace eval trigger {
 		proc primary {nick uhost hand chan text} {
@@ -45,9 +47,21 @@ namespace eval jki {
 				putserv "PRIVMSG $chan :JunKii 'junky' commands via '${jki::settings::gen::pubtrig}junky stock' or use '${jki::settings::gen::pubtrig}weed help' for weed commands"
 			}
 			if {$v1 == "stock"} {
-				putserv "PRIVMSG $chan :JunKii - Current available stock: alcohol, scotch, whiskey, heroin, coke, shrooms"
+				putserv "PRIVMSG $chan :JunKii - Available Alcohol stock: alcohol, scotch, whiskey, gin, vodka, congac, tequila, beer, cooler"
+				putserv "PRIVMSG $chan :JunKii - Available Drugs stock: heroin, coke, shrooms"
 				putserv "PRIVMSG $chan :JunKii - Available Kratom stocks: kpops (pills), kpow (powder), kshot (liquid)"
 				return
+			}
+			if {$v1 == "menu"} {
+				set jsc "[jki::util::sql::checkbrand scotch]"
+				set jwh "[jki::util::sql::checkbrand whiskey]"
+				set jji "[jki::util::sql::checkbrand gin]"
+				set jvk "[jki::util::sql::checkbrand vodka]"
+				set jcg "[jki::util::sql::checkbrand congac]"
+				set jtq "[jki::util::sql::checkbrand tequila]"
+				set jbr "[jki::util::sql::checkbrand beer]"
+				set jcl "[jki::util::sql::checkbrand cooler]"
+				putserv "PRIVMSG $chan :JunKii Menu - scotch $jsc | whiskey $jwh | gin $jji | vodka $jvk | congac $cg | tequila $tq | beer $jbr | cooler $jcl"
 			}
 			if {$v1 == "alcohol"} {
 				putserv "PRIVMSG $chan :hey junkiis, lets all get drunk on $nick's dime!!"
@@ -55,14 +69,50 @@ namespace eval jki {
 			}
 			if {$v1 == "scotch"} {
 				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
-				jki::util::act $chan "pours $jkip a single-malt scotch over rocks, then slides it down the bar to them"
+				jki::util::act $chan "pours $jkip a [jki::util::sql::checkbrand scotch] scotch over rocks, then slides it down the bar to them"
 				putserv "PRIVMSG $chan :Enjoy your scotch, $jkip!"
 				return
 			}
 			if {$v1 == "whiskey"} {
 				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
-				jki::util::act $chan "pours $jkip a glass of whiskey over rocks, then slides it down the bar to them"
+				jki::util::act $chan "pours $jkip a glass of [jki::util::sql::checkbrand whiskey] whiskey over rocks, then slides it down the bar to them"
 				putserv "PRIVMSG $chan :Enjoy your whiskey, $jkip!"
+				return
+			}
+			if {$v1 == "gin"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "pours $jkip a glass of [jki::util::sql::checkbrand gin] gin on ice, then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your gin, $jkip!"
+				return
+			}
+			if {$v1 == "tequila"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "pours $jkip a shot of [jki::util::sql::checkbrand tequila], then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your tequila, $jkip!"
+				return
+			}
+			if {$v1 == "vodka"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "pours $jkip a glass of [jki::util::sql::checkbrand vodka] vodka, then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your vodka and sadness, $jkip!"
+				return
+			}
+			if {$v1 == "congac"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "pours $jkip a glass of [jki::util::sql::checkbrand congac] on ice, then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your fancy people alcohol, $jkip!"
+				return
+			}
+			if {$v1 == "beer"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "pours $jkip a stein of [jki::util::sql::checkbrand beer] on tap, then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your beer, $jkip!"
+				return
+			}
+			if {$v1 == "whiskey"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "grabs $jkip a cooler of [jki::util::sql::checkbrand cooler], then hands it to them"
+				putserv "PRIVMSG $chan :Enjoy your cooler, $jkip!"
 				return
 			}
 			if {$v1 == "heroin"} {
@@ -114,6 +164,7 @@ namespace eval jki {
 					return
 				}
 			}
+			if {$v1 == "420"} { jki::weed::synctime }
 		}
 		proc register {nick uhost hand chan text} {
 			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
@@ -139,6 +190,17 @@ namespace eval jki {
 			if {$v1 == "help"} {
 				putserv "PRIVMSG $chan :use '${jki::settings::gen::pubtrig}weed \[device\] \[user (optional)\]' to smoke (or pass) something within the channel"
 				return
+			}
+			if {$v1 == "strains"} {
+				set jbg "[jki::util::sql::checkstrain bong]"
+				set jhk "[jki::util::sql::checkstrain hookah]"
+				set jbl "[jki::util::sql::checkstrain blunt]"
+				set jjt "[jki::util::sql::checkstrain joint]"
+				set jda "[jki::util::sql::checkstrain dab]"
+				set jch "[jki::util::sql::checkstrain chillum]"
+				set jsr "[jki::util::sql::checkstrain steamroller]"
+				set jpp "[jki::util::sql::checkstrain pipe]"
+				putserv "PRIVMSG $chan :\[JunKii\] Strains: dab $jda | bong $jbg | hookah $jhk | pipe $jpp | chillum $jch | joint $jjt | blunt $jbl"
 			}
 			if {$v2 == ""} { set jkiwp $nick; set jpas "no"; } else { set jkiwp $v2; set jpas "yes"; }
 			if {$v1 == "bong"} {
@@ -209,9 +271,10 @@ namespace eval jki {
 			utimer 8 "putserv \"PRIVMSG $wchan :\00315::\00314\002_\00315/\00302SYNCRONIZED! \00304Fire Away!\002\00307!\00308\002!\"";
 			return
 		}
-		proc synctime {} {
-			if {${jki::settings::} == ""} { return }
-				putserv "PRIVMSG [zboe::util::homechan] :\00315::\00304/\00303////\00315/\00315:\\00303/\00302/// \0039ITS 4:20! Hit that shit, pass that shit \00302/\00314//\00311\00315/\00315:\\00315/\00303\00315/\00315:" 
+		proc synctime {m h d n y} {
+			if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "synctime"; }
+			if {${jki::settings::gen::syncpack} == "no"} { return }
+			putserv "PRIVMSG ${jki::settings::gen::homechan} :\00315::\00304/\00303////\00315/\00315:\00303/\00302/// \0039It's 4:20 Somewhere!! Spark it up and get faded g \00302/\00314//\00311\00315/\00315:\00315/\00303\00315/\00315:" 
 		}
 	}
 	namespace eval base {
@@ -220,6 +283,23 @@ namespace eval jki {
 			putserv "PRIVMSG $chan :JunKii Alcohol and Drug Abuse TRPG"
 			putserv "PRIVMSG $chan :JunKii -> version-[jki::util::getVersion] [jki::util::getBuild] r:[jki::util::getRelease]"
 			return
+		}
+	}
+	namespace eval dcc {
+		proc command {hand idx text} {
+			set v1 [lindex [split $text] 0]
+			if {$v1 == "reset"} {
+				file delete "scripts/junkii/jki.sqlite"
+				jki::util::jcmd "Database removed"
+				jki::util::sql::initdb
+				jki::util::jcmd "Database initialized"
+				return
+			}
+			if {$v1 == "init"} { jki::util::sql::initdb; }
+			if {$v1 == "flush"} {
+				jdb cache flush;
+				jdb 
+			}
 		}
 	}
 	namespace eval util {
@@ -259,35 +339,38 @@ namespace eval jki {
             }
 
             proc initdb {} {
-				set initdb "[jkisql eval {SELECT * FROM settings WHERE drug=weed}]"
-				if {$initdb == ""} {
-					if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "*** initializing sql"; }
-					jdb eval {CREATE TABLE dealers(drug TEXT, dealer TEXT, uses INTEGER)}
-					jdb eval {INSERT INTO dealers VALUES('weed', 'system', 0)}
-					#                               0              1           2          3           4               5               6                7                8                    9                 10              
-					jdb eval {CREATE TABLE users(user TEXT, weed INTEGER, alc INTEGER, nic INTEGER, heroin INTEGER, coke INTEGER, scotch INTEGER, whiskey INTEGER, rum INTEGER,  INTEGER)}
-					if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "*** SQL Database initialized"; }
-				} else {
-					if {${jki::settings::debug} == "2"} { jki::util::jcmd "dbinit halted, db exists"; }
-					}
+				if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "*** initializing sql"; }
+				jdb eval {CREATE TABLE dealers(drug TEXT, dealer TEXT, uses INTEGER)}
+				jdb eval {CREATE TABLE strains(dab TEXT, joint TEXT, blunt TEXT, bong TEXT, hookah TEXT, steamroller TEXT, pipe TEXT, chillum TEXT)}
+				jdb eval {CREATE TABLE brands(scotch TEXT, whiskey TEXT, congac TEXT, vodka TEXT, tequila TEXT, gin TEXT, beer TEXT, cooler TEXT)}
+				jdb eval {INSERT INTO dealers VALUES('weed', 'system', 0)}
+				jdb eval {INSERT INTO strains VALUES('Gastro Cough', 'GMO', 'Green Crack', 'Cupcake', 'Super Sour Diesel', 'Animal', 'Matanuska ThunderFuk', 'Runtz')}
+				jdb eval {INSERT INTO brands VALUES('Single Malt Islay', 'Jameson', 'hennessy', 'Smirnoff', 'Patron', 'New Hamsterdam', 'Pisswasser', 'Beast Unleashed')}
+				#                               0              1           2          3           4               5               6                7                8                    9                 10              
+				jdb eval {CREATE TABLE users(user TEXT, weed INTEGER, alc INTEGER, nic INTEGER, heroin INTEGER, coke INTEGER, scotch INTEGER, whiskey INTEGER, rum INTEGER,  INTEGER)}
+				if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "*** SQL Database initialized"; }
             }
 			proc checkdrug_use {user drug} {
-                set jdbrt "[jkisql eval {SELECT * FROM users WHERE user=$user}]"
+                set jdbrt "[jdb eval {SELECT * FROM users WHERE user=$user}]"
                 if {$drug == "weed"} { return [lindex [split $jdbrt] 1] }
 				if {$drug == "alc"} { return [lindex [split $jdbrt] 2] }
 				if {$drug == "nic"} { return [lindex [split $jdbrt] 3] }
 				if {$drug == "heroin"} { return [lindex [split $jdbrt] 4] }
 				if {$drug == "coke"} { return [lindex [split $jdbrt] 5] }
             }
-			proc checkdrug_od {user drug} {
-			
+			proc checkstrain {drug} {
+				set jdbrt [jdb eval "SELECT $drug FROM strains"]
+				if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "checkstrain - $jdbrt"; }
+				return $jdbrt;
 			}
-            proc changedrug_use {user d v} {
-				if {$d == "alc"} { jkisql eval "UPDATE users SET alc_use = ('$v') WHERE user = '$user'" }
+			proc checkbrand {alc} {
+				set jdbrt [jdb eval "SELECT $alc FROM brands"]
+				if {${jki::settings::debug} >= "2"} { jki::util::jdbg "2" "checkbrand - $jdbrt"; }
+				return $jdbrt;
+			}
+            proc changedrug {user d v} {
+				jdb eval "UPDATE users SET '$d' = ('$v') WHERE user = '$user'"
             }
-			proc changedrug_od {user d v} {
-				if {$d == "alc"} { jkisql eval "UPDATE users SET alc_od = ('$v') WHERE user = '$user'" }
-			}
 		}
 	}
 	putlog "JunKii - Base Game $jki::settings::version -- LOADED"
