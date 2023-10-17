@@ -109,6 +109,12 @@ namespace eval jki {
 				putserv "PRIVMSG $chan :Enjoy your beer, $jkip!"
 				return
 			}
+			if {$v1 == "cooler"} {
+				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
+				jki::util::act $chan "grabs $jkip a can of [jki::util::sql::checkbrand cooler], then slides it down the bar to them"
+				putserv "PRIVMSG $chan :Enjoy your cooler, $jkip!"
+				return
+			}
 			if {$v1 == "whiskey"} {
 				if {$v2 != ""} { set jkip $v2; } else { set jkip $nick; }
 				jki::util::act $chan "grabs $jkip a cooler of [jki::util::sql::checkbrand cooler], then hands it to them"
@@ -167,7 +173,7 @@ namespace eval jki {
 			if {$v1 == "420"} { jki::weed::synctime }
 		}
 		proc register {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			if {[validuser $hand] == "1"} { putserv "PRIVMSG $chan :Sorry $nick, but you're already registered. :)"; return }
 			if {[adduser $hand $uhost] == "1"} {
 				putserv "PRIVMSG [zboe::util::homechan] :*** Introduced user - $nick / $uhost"
@@ -179,7 +185,7 @@ namespace eval jki {
 	}
 	namespace eval weed {
 		proc weed {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "weed command sent| $nick $chan - $text"; }
 			if {![channel get $chan weed]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have weed permission. y'all got jeezus"; return }
 			#jki::util::sql::dbmake "$nick";
@@ -204,36 +210,36 @@ namespace eval jki {
 			}
 			if {$v2 == ""} { set jkiwp $nick; set jpas "no"; } else { set jkiwp $v2; set jpas "yes"; }
 			if {$v1 == "bong"} {
-				jki::util::act $chan "loads a bong with some Zkittles and passes to $jkiwp";
+				jki::util::act $chan "loads a bong with some [jki::util::sql::checkstrain bong] and passes to $jkiwp";
 				if {$jpas == "yes"} { putserv "PRIVMSG $chan :Clear that shit and pass it around"; return }
 			}
 			if {$v1 == "pipe"} {
-				jki::util::act $chan "loads a pipe with some Shrek Swamp Punch and passes to $jkiwp";
+				jki::util::act $chan "loads a pipe with some [jki::util::sql::checkstrain pipe] and passes to $jkiwp";
 				if {$jpas == "yes"} { putserv "PRIVMSG $chan :Hit that shit and pass it around"; return }
 			}
 			if {$v1 == "joint"} {
-				jki::util::act $chan "rolls a joint with some Girl Scout Cookies and passes to $jkiwp";
+				jki::util::act $chan "rolls a joint with some [jki::util::sql::checkstrain joint] and passes to $jkiwp";
 				if {$jpas == "yes"} { putserv "PRIVMSG $chan :Hit that shit and pass it around"; return }
 			}
 			if {$v1 == "dab"} {
-				jki::util::act $chan "grabs a jar of some Green Crack budder and a eNail and hands it to $jkiwp";
+				jki::util::act $chan "grabs a jar of some [jki::util::sql::checkstrain dab] budder and a eNail and hands it to $jkiwp";
 				if {$jpas == "yes"} { putserv "PRIVMSG $chan :Hit that shit and pass it around"; return }
 			}
 		}
 		proc pass {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan  'pass' blocked - missing flag"; return }
 			putserv "PRIVMSG $chan :Err, system in progress";
 		}
 		proc bong {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			putserv "PRIVMSG $chan :Err, system in progress";
 		}
 		proc joint {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			putserv "PRIVMSG $chan :Err, system in progress";
 		}
 		proc pack {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			if {${jki::settings::debug} >= "1"} { jki::util::jdbg "1" "Pack command sent| $nick $chan - $text"; }
 			if {![channel get $chan weed]} { putserv "PRIVMSG $chan :\[JunKii\] Error - This channel does not have weed permission. y'all got jeezus"; return }
 			if {${jki::settings::debug} >= "3"} { jki::util::jdbg "3" "Initiating pack command"; }
@@ -256,7 +262,7 @@ namespace eval jki {
 				}
 			} else { set delay $jki::settings::timers::packdefault }
 			if {${jki::settings::debug} >= "3"} { jki::util::jdbg "3" "Pack delay set: $delay"; }
-			putserv "PRIVMSG $chan \00303Pack your \00309bowls\00303! Gring it, Load it, Heat it, Roll it!! Chan-wide \00315\002Toke\002\00306-\00315\002out\002\00303 in\00311 $delay \00303seconds!\003"
+			putserv "PRIVMSG $chan \00303Pack your \00309bowls\00303! Grind it, Load it, Heat it, Roll it!! Chan-wide \00315\002Toke\002\00306-\00315\002out\002\00303 in\00311 $delay \00303seconds!\003"
 			utimer $delay jki::weed::pack:go
 		}
 		proc pack:go {} {
@@ -279,7 +285,7 @@ namespace eval jki {
 	}
 	namespace eval base {
 		proc version {nick uhost hand chan text} {
-			if {![channel get $chan jnki]} { putserv "command call 'register' blocked - missing flag"; return }
+			if {![channel get $chan jnki]} { jki::util::jcmd "command from $chan blocked - missing flag"; return }
 			putserv "PRIVMSG $chan :JunKii Alcohol and Drug Abuse TRPG"
 			putserv "PRIVMSG $chan :JunKii -> version-[jki::util::getVersion] [jki::util::getBuild] r:[jki::util::getRelease]"
 			return
@@ -298,7 +304,6 @@ namespace eval jki {
 			if {$v1 == "init"} { jki::util::sql::initdb; }
 			if {$v1 == "flush"} {
 				jdb cache flush;
-				jdb 
 			}
 		}
 	}
